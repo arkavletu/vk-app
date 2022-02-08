@@ -2,7 +2,7 @@ package ru.netology
 
 fun main(){
     val userName = "Dobby"
-    val secondsAgo: Int = 2
+    val secondsAgo = 2
     val wasHere = agoToText(secondsAgo)
     val message = formattedMessage(userName, wasHere)
     println(message)
@@ -24,9 +24,9 @@ fun agoToText(time: Int): String{
 }
 
 fun spellMinutes(time: Int): String {
-    return when (time){
-        1, 21, 31, 41, 51 -> "минуту"
-        in 2..4, in 22..24, in 32..34, in 42..44, in 52..54 -> "минуты"
+    return when {
+        time in 2..4 || time % 10 in 2..4 -> "минуты"
+        time == 1 || time % 10 == 1 && time != 11 -> "минуту"
         else -> "минут"
     }
 }
