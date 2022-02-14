@@ -7,38 +7,29 @@ const val THREE_DAYS = DAY * 3
 
 fun main(){
     val userName = "Dobby"
-    val secondsAgo = TWO_DAYS
+    val secondsAgo = HOUR*4
     val wasHere = agoToText(secondsAgo)
-    val message = formattedMessage(userName, wasHere)
-    println(message)
+    println(formattedMessage(userName, wasHere))
 }
 fun agoToText(time: Int): String{
-    val minutes = time/60
-    val hours = minutes/60
-
- return  when (time){
-       in 0..60 -> "только что"
-       in MINUTE until HOUR -> "$minutes ${spellMinutes(minutes)} назад"
-       in HOUR until DAY -> "$hours ${spellHours(hours)} назад"
-       in DAY until TWO_DAYS -> "сегодня"
-       in TWO_DAYS until THREE_DAYS -> "вчера"
-       else -> "давно"
+ return  when {
+     time >= THREE_DAYS -> "давно"
+     time >= TWO_DAYS -> "вчера"
+     time >= DAY-> "сегодня"
+     time >= HOUR -> "${spell(time, one ="час", two = "часа", other = "часов")} назад"
+     time >= MINUTE -> "${spell(time, one ="минуту", two = "минуты", other = "минут")} назад"
+     else -> "только что"
     }
 }
 
-fun spellMinutes(time: Int): String {
-    return when {
-        time in 2..4 || time % 10 in 2..4 -> "минуты"
-        time % 10 == 1 && time != 11 -> "минуту"
-        else -> "минут"
-    }
-}
+fun spell(amount: Int, one: String, two: String, other: String): String{
+    val min = if(amount/MINUTE < 60) amount/MINUTE else amount/HOUR
 
-fun spellHours(time: Int): String {
-    return when {
-        time % 10 == 1 && time != 11 -> "час"
-        time in 2..4 || time % 10 in 2..4 -> "часа"
-        else -> "часов"
+    return  when {
+        min % 10 == 1 && min != 11-> "$min $one"
+        min % 10 in 2..4 -> "$min $two"
+        else -> "$min $other"
+
     }
 }
 
