@@ -25,14 +25,18 @@ fun agoToText(time: Int): String {
 }
 
 fun spell(amount: Int, one: String, two: String, other: String): String {
-    val min = if (amount / MINUTE < 60) amount / MINUTE else amount / HOUR
-
+    val timeAgo = convertSeconds(amount)
+    val remainder = timeAgo % 10
     return when {
-        min % 10 == 1 && min != 11 -> "$min $one"
-        min % 10 in 2..4 -> "$min $two"
-        else -> "$min $other"
+        remainder == 1 && timeAgo != 11 -> "$timeAgo $one"
+        remainder in 2..4 && timeAgo != 12 -> "$timeAgo $two"
+        else -> "$timeAgo $other"
 
     }
+}
+
+fun convertSeconds(amount: Int): Int{
+    return if (amount < HOUR) amount / MINUTE else amount / HOUR
 }
 
 fun formattedMessage(userName: String, wasHere: String): String {
