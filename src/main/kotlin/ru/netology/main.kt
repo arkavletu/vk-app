@@ -8,7 +8,7 @@ const val THREE_DAYS = DAY * 3
 
 fun main() {
     val userName = "Dobby"
-    val secondsAgo = MINUTE * 12
+    val secondsAgo = HOUR * 4
     val wasHere = agoToText(secondsAgo)
     println(formattedMessage(userName, wasHere))
 }
